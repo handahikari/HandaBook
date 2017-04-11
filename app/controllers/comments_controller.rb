@@ -1,25 +1,25 @@
 class CommentsController < ApplicationController
   def create
-  	@comments = Comment.new(comment_params)
-   	respond_to do |format|
-      if @comments.save
-        format.html { redirect_to @comments, notice: 'Comments was successfully created.' }
-        format.json { render :show, status: :created, location: @comments }
-      else
-        format.html { render :new }
-        format.json { render json: @comments.errors, status: :unprocessable_entity }
-      end
-    end
+  	@article = Article.find(params[:article_id])
+  	@comment = @article.comments.create(params[:comment])
+  	redirect_to article_path(params[:article_id])
+  end
 
   def destroy
-  	@comments.destroy
-  	respond_to do |format|
-      format.html { redirect_to articles_url, notice: 'Comments was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  	Comment.destroy(params[:id])
+  	redirect_to article_path(params[:article_id])
   end
   private
   	def comment_params
-      params.require(:name , :article_id).permit(:content)
-    end
+    	#params.require(:article_id).map do |u|
+    		ActionController::Parameters.new({
+    			"utf8"=>"✓",
+ 				"authenticity_token"=>"bE4z6L2adHcomNSGrz1mn+WIykYcsjB4Rr4bYfGpQE+HmJ6L3+FaD5QS/NfrbIvL2NpbRFcqdQrdYAhqgVGblA==",
+ 				"comment"=>{"from"=>"mvs]", "content"=>"mL's:", "article_id"=>"1"},
+ 				"commit"=>"コメントを投稿する",
+ 				"article_id"=>"1"
+ 				})
+    		
+
+  	end
 end

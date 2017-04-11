@@ -20,11 +20,19 @@
   <%= @article.user_id %>
 </p>
 <p>
-
- <strong>~Comments~</strong>
- <strong>content:</strong>
- <%= @article.comments.content %>
+  <strong>コメント：</strong>
+  <%= @article.comments.each do |comment| %>
+  	<h4><%= comment.from %>さん</h4>
+  	<pre><%= comment.content %></pre>
+  	<p><%= link_to 'コメントを消去する', [@article, comment], method: :delete, data: {confirm: 'Are you sure?' }%></p>
+  <% end %>
+  <p>コメント追加：</p>
+  <%= form_for [@article, @comment] , :url => article_comments_path(@article) do |f| %>
+  	<p>From:</p><p><%= f.text_field :from %></p>
+  	<span><p>Comment:</p></span><p><%= f.text_area :content, :rows => 5 %></p>
+  	<%= f.hidden_field :article_id, :value => @article.id %>
+	<p><%= f.submit 'コメントを投稿する' %></p>
+  <% end %>
 </p>
-<%= link_to 'Comment' , comment_create_path %>
 <%= link_to 'Edit', edit_article_path(@article) %> |
 <%= link_to 'Back', articles_path %>

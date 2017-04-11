@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-  get 'comments/create'
+  
 
   get 'users/index'
 
   devise_for :users
-  resources :articles
+  resources :articles do
+  	resources :comments, :only => [:create, :destroy]
+  end
   root 'articles#index'
   get '/users' => 'users#index'
   get '/users/:id' => 'users#show'
