@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HandaBook</title>
+    
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+    <% if user_signed_in? %>
+      <p><%= current_user.email %>としてログインしてます。</p>
+      <p><%= link_to "ログアウト" , destroy_user_session_path , method: :delete %></p>
+    <% else %>
+      <p><%= link_to "新規登録" , new_user_registration_path %>/
+      <p><%= link_to "ログイン" , new_user_session_path %></p>
+    <% end %>
+  </body>
+  
+</html>

@@ -1,0 +1,5 @@
+<h1>コメント投稿</h1>
+<% form_for (@comments) do |f| %>
+	<%= f.hidden_field :article_id, :value => @article.id %>
+<% end %>
+

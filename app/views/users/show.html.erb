@@ -1,0 +1,5 @@
+<p><%= @user.email %>のページ</p>
+<% @user.articles.each do |article| %>
+	<p>タイトル：<%= article.title %></p>
+	<p>著者：<%= article.author %></p>
+<% end %>
